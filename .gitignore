@@ -1,0 +1,7 @@
+
+.env.secrets
+!.env.dist
+!.env
+tmp/*
+build/*
+dist/*
