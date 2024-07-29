@@ -1,0 +1,20 @@
+#
+# 1. https://hub.docker.com/r/linuxserver/plex
+# 1. https://phoenixnap.com/kb/nfs-docker-volumes
+---
+
+services:
+  twitch2tuner:
+    container_name: "twitch2tuner-1"
+    restart: "always"
+    image: "ghcr.io/micahmo/twitch2tuner"
+    network_mode: "host"
+    command: "/bin/true"
+    ports:
+      # http://192.168.14.251:22708/epg.xml
+      - 192.168.14.251:22708:22708/tcp
+    environment:
+      - "CLIENT_ID=09t6miroodb6spzmr59ftjwlil3jjp"
+      - "CLIENT_SECRET=u00lu1hjgc56b2ebfm1ku5zdvj8pjm"
+      - "TWITCH_USERNAME=32799584"
+      - "CHANNELS_FOLLOWED=1067829725"
