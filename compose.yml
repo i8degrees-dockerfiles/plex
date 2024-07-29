@@ -103,12 +103,3 @@ services:
       #- "/dev/dri:/dev/dri"
     cpu_count: 2
     mem_limit: 1G
-#cloudflared:
-#image: erisamoe/cloudflared
-#container_name: "cloudflared-tunnel-1"
-#restart: unless-stopped
-#command: tunnel run
-#environment:
-#- TUNNEL_TOKEN=${TUNNEL_TOKEN}
-#depends_on:
-# - plex
