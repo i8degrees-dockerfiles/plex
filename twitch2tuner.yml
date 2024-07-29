@@ -10,6 +10,8 @@ services:
     image: "ghcr.io/micahmo/twitch2tuner"
     network_mode: "host"
     command: "/bin/true"
+    env_file:
+      "- ./.env.secrets"
     ports:
       # http://192.168.14.251:22708/epg.xml
       - 192.168.14.251:22708:22708/tcp
