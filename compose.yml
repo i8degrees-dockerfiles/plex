@@ -63,15 +63,12 @@ volumes:
 services:
   plex:
     restart: unless-stopped
-    image: lscr.io/linuxserver/plex:1.40.2
+    image: "lscr.io/linuxserver/plex:1.40.2"
     container_name: "plex-1"
     hostname: "plex"
     network_mode: host
-    environment:
-      - "PUID=500"
-      - "PGID=50"
-      - "TZ=America/Chicago"
-      - "VERSION=1.40.2"
+    #env_file:
+      #./.env
     volumes:
       # local volumes are automatically created
       - config:/config
@@ -100,7 +97,7 @@ services:
       - 32469:32469
     #networks:
       #- traefik-proxy 
-    #devices:
+      #devices:
       # FIXME
       # Intel GPU for HW accelerated encoding
       #- "/dev/dri:/dev/dri"
