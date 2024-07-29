@@ -15,49 +15,49 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=fs1-san.home,ro
+      o: addr=fs1-san.home,ro,vers=4
       device: :/mnt/fs1/Music
   Public:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=fs1-san.home,rw
+      o: addr=fs1-san.home,rw,vers=4
       device: :/mnt/fs1/Public
   Downloads:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=fs1-san.home,ro
+      o: addr=fs1-san.home,ro,vers=4
       device: :/mnt/fs1/Downloads
   Pictures:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=fs1-san.home,ro
+      o: addr=fs1-san.home,ro,vers=4
       device: :/mnt/fs1/Pictures
   Torrents:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=fs1-san.home,rw
+      o: addr=fs1-san.home,rw,vers=4
       device: :/mnt/fs1/Torrents/completed
   Videos:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=fs1-san.home,ro
+      o: addr=fs1-san.home,ro,vers=4
       device: :/mnt/fs1/Videos
   Movies:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=fs1-san.home,rw
+      o: addr=fs1-san.home,rw,vers=4
       device: :/mnt/fs1/Videos/movies
   TV:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=fs1-san.home,rw
+      o: addr=fs1-san.home,rw,vers=4
       device: :/mnt/fs1/Videos/tv
 
 services:
