@@ -1,0 +1,117 @@
+# 1. http://192.168.12.1:22708/epg.xml
+# 2. https://www.streamweasels.com/tools/convert-twitch-username-to-user-id/
+---
+
+#version: "3.9"
+
+volumes:
+  # local state; this can be a shared remote if necessary
+  config:
+    external: false
+  tmp:
+    external: false
+  # remote
+  Music:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=fs1-san.home,ro
+      device: :/mnt/fs1/Music
+  Public:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=fs1-san.home,rw
+      device: :/mnt/fs1/Public
+  Downloads:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=fs1-san.home,ro
+      device: :/mnt/fs1/Downloads
+  Pictures:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=fs1-san.home,ro
+      device: :/mnt/fs1/Pictures
+  Torrents:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=fs1-san.home,rw
+      device: :/mnt/fs1/Torrents/completed
+  Videos:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=fs1-san.home,ro
+      device: :/mnt/fs1/Videos
+  Movies:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=fs1-san.home,rw
+      device: :/mnt/fs1/Videos/movies
+  TV:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=fs1-san.home,rw
+      device: :/mnt/fs1/Videos/tv
+
+services:
+  plex:
+    restart: unless-stopped
+    image: lscr.io/linuxserver/plex:1.40.2
+    container_name: "plex-1"
+    hostname: "plex"
+    network_mode: host
+    environment:
+      - "PUID=500"
+      - "PGID=50"
+      - "TZ=America/Chicago"
+      - "VERSION=1.40.2"
+    volumes:
+      # local volumes are automatically created
+      - config:/config
+      - tmp:/tmp/Transcode
+      # remote volumes must be speicfied by the user
+      # in the top-level volumes configuration above
+      - Downloads:/media/libraries/Downloads
+      - Movies:/media/Movies
+      - Music:/media/libraries/Music
+      - Pictures:/media/Pictures
+      - Public:/media/Public
+      - TV:/media/libraries/TV
+      - Videos:/media/libraries/Videos
+    ports:
+      # HTTPS "websecure" daemon
+      - 32400:32400
+      # UPNP daemon
+      - 1900:1900/udp
+      # MDNS
+      - 5353:5353/udp
+      - 8324:8324
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+      - 32469:32469
+    #networks:
+      #- traefik-proxy 
+    #devices:
+      # FIXME
+      # Intel GPU for HW accelerated encoding
+      #- "/dev/dri:/dev/dri"
+    cpu_count: 2
+    mem_limit: 1G
+#cloudflared:
+#image: erisamoe/cloudflared
+#container_name: "cloudflared-tunnel-1"
+#restart: unless-stopped
+#command: tunnel run
+#environment:
+#- TUNNEL_TOKEN=${TUNNEL_TOKEN}
+#depends_on:
+# - plex
