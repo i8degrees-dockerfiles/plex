@@ -103,3 +103,8 @@ services:
       #- "/dev/dri:/dev/dri"
     cpu_count: 2
     mem_limit: 1G
+    labels:
+      - "homepage.group=syn"
+      - "homepage.name=plex-1"
+      - "homepage.siteMonitor=http://docker.fs1.home:32400/"
+      - "homepage.ping=docker.fs1.home"
